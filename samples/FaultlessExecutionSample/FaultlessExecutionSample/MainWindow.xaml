@@ -1,0 +1,28 @@
+﻿<Window x:Class="FaultlessExecutionSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FaultlessExecutionSample"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="1000" >
+    <StackPanel Margin="10">
+
+        <Button Content="Reload" Width="100" Command="{Binding ReloadCommand}"/>
+
+        <StackPanel Orientation="Horizontal">
+            <ListBox ItemsSource="{Binding PeopleList}" DisplayMemberPath="Name" MinWidth="150" Margin="10"/>
+            <ListBox ItemsSource="{Binding CityList}" DisplayMemberPath="Name" MinWidth="150" Margin="10"/>
+            <ListBox ItemsSource="{Binding AnswerList}" DisplayMemberPath="Name" MinWidth="150" Margin="10"/>
+            <ListBox ItemsSource="{Binding ErrorList}"  MinWidth="150" Margin="10"/>
+        </StackPanel>
+        <StackPanel>
+            <CheckBox Content="People Should Error" IsChecked="{Binding PeopleShouldError}"/>
+            <CheckBox Content="City Should Error" IsChecked="{Binding CityShouldError}"/>
+            <CheckBox Content="Answer Should Error" IsChecked="{Binding AnswerShouldError}"/>
+            <CheckBox Content="Check Files Should Error" IsChecked="{Binding CheckFilesShouldError}"/>
+            <Separator/>
+            <CheckBox Content="Use Generic Exception handler" IsChecked="{Binding UseGenericExceptionHandler}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
