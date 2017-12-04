@@ -54,7 +54,8 @@ Since the code we are passing to the service is Func<T> or Action, we can make u
 One of the most unrealized uses of this service, is the ability to write your own super-simple handler for all exceptions; this prevents copying and pasting the OnException block everytime you use the service.
 Derrive from the FaultlessExecution.FaultlessExecutionService class and you can process any exception however you'd like
 ```c#
-//Please note, i absolutely do not condon this messagebox implementation, but it's simple an illustrates the point
+//Please note, i absolutely do not condone this messagebox implementation, 
+//  but it's simple an illustrates the point
 public class ShowMessageBoxFaultlesExecutionService : FaultlessExecution.FaultlessExecutionService
 {
     protected override void OnException(Exception ex)
@@ -136,12 +137,12 @@ public interface IViewModelFaultHandler : IFaultlessExecutionService
 ## I have a global error handler. I don't need this.
 Fantastic! Your global error handler will catch all the errors, allow you to log and show them, but that still does not allow you to _elegantly_ recover from calls that you know are potentially risky.
 
-When you make a call to get data from the database, or from a Rest Api, or anywhere that there might be connection issues or timeouts, are you comfortable with the global error handler?  If you have relied on that global handler, once you hit that handler, your application is in a pretty unknown state because you bailed from all code without a chance to leave the user in a good place.
+When you make a call to get data from the database, or from a Rest Api, or anywhere that there might be connection issues or timeouts, are you comfortable with the global error handler?  Once you hit your global handler, your application is in a pretty unknown state because you bailed from all code without a chance to leave the user in a good place.
 
-A good use of this library is a simple way to handle all errors, and do a bit of cleanup. Maybe there are some pieces of data that your view can live without, while others warrent you telling the user what happened and closing out the window/page.
+A good use of this library is to handle all errors, and do a bit of cleanup before bailing. Maybe there are some pieces of data that your view can live without, while others warrent you telling the user what happened and closing out the window/page.
 
 ## Why not just use try/catch around every line that might error
-If you are displined enough to put try catch around every external resource call, and copy/paste the same "catch" block in every place, then you are far more disciplined than I.
+If you are disciplined enough to put try catch around every external resource call, and copy/paste the same "catch" block in every place, then you are far more disciplined than I.
 
 ## Installing
 TODO- provide nuget package info
