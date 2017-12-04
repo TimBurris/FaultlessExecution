@@ -34,7 +34,7 @@ namespace FaultlessExecutionSample
             if (peopleResult.WasSuccessful)
                 LoadPersonList(peopleResult.ReturnValue);
             else
-                this.HandleException(peopleResult.Exception);
+                HandleException(peopleResult.Exception);
 
             //example of using OnException and/or OnSuccess to perform actions based on whether the call was successful or not
             _faultlessExecutionService.TryExecute(() => _webApi.GetSomeCities())
@@ -53,6 +53,27 @@ namespace FaultlessExecutionSample
             _faultlessExecutionService.TryExecute(() => _fileSystem.CheckAllOfYourFiles())
                 .RetryOnceIf((result) => result.Exception is TimeoutException)
                 .OnException((r) => this.HandleException(r.Exception));
+        }
+
+        public async void LoadAsync()
+        {
+            var peopleResult = await _faultlessExecutionService.TryExecuteAsync(() => _database.GetAllThePeopleInTheWorldAsync());
+            if (!peopleResult.WasSuccessful)
+                return;
+
+            this.LoadPersonList(peopleResult.ReturnValue);
+
+            var cityResult = await _faultlessExecutionService.TryExecuteAsync(() => _webApi.GetSomeCitiesAsync());
+            if (!cityResult.WasSuccessful)
+                return;
+
+            this.LoadCityList(cityResult.ReturnValue);
+
+            var answerResult = await _faultlessExecutionService.TryExecuteAsync(() => _cloud.GetAllTheAnswersAsync());
+            if (!answerResult.WasSuccessful)
+                return;
+
+            this.LoadAnswerList(answerResult.ReturnValue);
         }
 
         public void LoadPersonList(IEnumerable<DemoServices.Person> people) { this.PeopleList = new ObservableCollection<DemoServices.Person>(people); }

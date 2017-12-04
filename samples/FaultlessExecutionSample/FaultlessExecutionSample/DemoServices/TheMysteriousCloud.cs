@@ -18,6 +18,14 @@ namespace FaultlessExecutionSample.DemoServices
                 new Answer(){ Name="Pizza"},
             };
         }
+
+
+        public async Task<IEnumerable<Answer>> GetAllTheAnswersAsync()
+        {
+            await Task.Delay(100);
+            return this.GetAllTheAnswers();
+        }
+
         public bool ThrowError { get; set; }
     }
     public class Answer

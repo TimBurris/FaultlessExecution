@@ -21,6 +21,13 @@ namespace FaultlessExecutionSample.DemoServices
              };
 
         }
+
+        public async Task<IEnumerable<Person>> GetAllThePeopleInTheWorldAsync()
+        {
+            await Task.Delay(100);
+            return this.GetAllThePeopleInTheWorld();
+        }
+
         public bool ThrowError { get; set; }
     }
 

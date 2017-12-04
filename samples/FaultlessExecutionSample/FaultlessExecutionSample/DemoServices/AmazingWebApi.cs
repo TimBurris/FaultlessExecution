@@ -22,6 +22,13 @@ namespace FaultlessExecutionSample.DemoServices
                 new City(){ Name="City D"},
             };
         }
+
+        public async Task<IEnumerable<City>> GetSomeCitiesAsync()
+        {
+            await Task.Delay(100);
+            return this.GetSomeCities();
+        }
+
         public bool ThrowError { get; set; }
     }
     public class City
