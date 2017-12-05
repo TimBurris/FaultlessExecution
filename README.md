@@ -2,7 +2,12 @@
 Library providing short-hand and extensibility for trapping exceptions
 
 ## Purpose
-To provide a mechanism declutter code that might require lots of try..catch as well as provide a way to more easily process exceptions on a line by line basis rather than relying on global error handlers.
+To provide a mechanism declutter code that might require lots of try..catch as well as provide a way to more easily process exceptions on a line by line basis rather than relying on global error handlers. 
+
+Hopefully this library encourages you, as it has me, to solve less than desirable try/catch solutions that I generally find myself facing
+* Wrapping large chunks of code in a single try/catch, making it difficult to recover from an exception because too much code has been encompassed 
+* Skipping try/catches altogether because it just seems tedious and pasting the same exact code in every "catch" to handle the exception seems redundant and annoying
+* Rely on a single global error handler for your entire application, and just accept that if an error occurs, the app (or web request) is pretty much a lost cause until restarted
 
 
 ## Usage
