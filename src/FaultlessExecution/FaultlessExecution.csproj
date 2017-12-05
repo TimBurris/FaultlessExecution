@@ -4,8 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Tim Burris</Authors>
     <Description>Library providing short-hand and extensibility for trapping exceptions</Description>
-    <Company>Tim Burris</Company>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
+
+    <PackageLicenseUrl>https://github.com/DumpsterNinja/FaultlessExecution/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/DumpsterNinja/FaultlessExecution</PackageProjectUrl>
+    <PackageTags>try;catch;trycatch;error;exception;exceptionhandler;errorhandler;handler;utility</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +17,7 @@
 
   <Target Name="IncludeP2PAssets">
     <ItemGroup>
-      <BuildOutputInPackage Include="$(OutputPath)\FaultlessExecution.Abstractions.dll" />
+      <BuildOutputInPackage Include="$(OutputPath)FaultlessExecution.Abstractions.dll" />
     </ItemGroup>
   </Target>
 </Project>
