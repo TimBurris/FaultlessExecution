@@ -33,6 +33,9 @@ Choose what to do if the code ran without error and what to do if the code did t
 ### Some Helpful Extensions
 While the first example helps a little, we can use extensions to simplify the code even more
 ```c#
+using FaultlessExecution.Extensions;
+```
+```c#
 _faultlessExecutionService
     .TryExecute(() => _database.GetAllThePeopleInTheWorld())
     .OnException((result) => this.HandleException(result.Exception))
@@ -93,7 +96,10 @@ In Wpf and Xamarin Forms I do show the error to the user, with an implementation
 public interface IViewModelFaultHandler : IFaultlessExecutionService
 {
 }
+```
 
+just derive from FaultlessExecutionService and override OnException
+```c#
  public class ViewModelFaultHandler : FaultlessExecutionService, IViewModelFaultHandler
     {
         private Contracts.INavigator _navigator;
