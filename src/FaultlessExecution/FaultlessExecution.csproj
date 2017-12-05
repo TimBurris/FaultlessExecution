@@ -8,4 +8,9 @@
     <ProjectReference Include="..\FaultlessExecution.Abstractions\FaultlessExecution.Abstractions.csproj" />
   </ItemGroup>
 
+  <Target Name="IncludeP2PAssets">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)\FaultlessExecution.Abstractions.dll" />
+    </ItemGroup>
+  </Target>
 </Project>
