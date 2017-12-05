@@ -2,10 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Tim Burris</Authors>
+    <Description>Library providing short-hand and extensibility for trapping exceptions</Description>
+    <Company>Tim Burris</Company>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FaultlessExecution.Abstractions\FaultlessExecution.Abstractions.csproj" />
+    <ProjectReference Include="..\FaultlessExecution.Abstractions\FaultlessExecution.Abstractions.csproj" PrivateAssets="All" />
   </ItemGroup>
 
   <Target Name="IncludeP2PAssets">
