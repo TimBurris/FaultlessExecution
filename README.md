@@ -13,7 +13,8 @@ private FaultlessExecution.Abstractions.IFaultlessExecutionService _faultlessExe
 
 Wrap your call to an external database/repo/api/service in a TryExecute so that no execptions are thrown
 ```c#
-var peopleResult = _faultlessExecutionService.TryExecute(() => _database.GetAllThePeopleInTheWorld());
+var peopleResult = _faultlessExecutionService
+    .TryExecute(() => _database.GetAllThePeopleInTheWorld());
 ```
 
 Choose what to do if the code ran without error and what to do if the code did throw an error
@@ -44,7 +45,8 @@ Since the code we are passing to the service is Func<T> or Action, we can make u
 
 ### Async 
 ```c#
- var peopleResult = await _faultlessExecutionService.TryExecute(() => _database.GetAllThePeopleInTheWorld());
+ var peopleResult = await _faultlessExecutionService
+     .TryExecute(() => _database.GetAllThePeopleInTheWorld());
  if(peopleResult.WasSuccessful)
     this.LoadPersonList(result.ReturnValue);
  else //Bail because we cannot finish loading    
