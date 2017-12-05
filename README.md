@@ -8,7 +8,8 @@ To provide a mechanism declutter code that might require lots of try..catch as w
 ## Usage
 new up or inject an instance of the FaultlessExecutionService
 ```c#
-private FaultlessExecution.Abstractions.IFaultlessExecutionService _faultlessExecutionService;
+private FaultlessExecution.Abstractions.IFaultlessExecutionService _faultlessExecutionService
+    = new FaultlessExecution.FaultlessExecutionService();
 ```        
 
 Wrap your call to an external database/repo/api/service in a TryExecute so that no execptions are thrown
@@ -57,7 +58,7 @@ One of the most unrealized uses of this service, is the ability to write your ow
 Derrive from the FaultlessExecution.FaultlessExecutionService class and you can process any exception however you'd like
 ```c#
 //Please note, i absolutely do not condone this messagebox implementation, 
-//  but it's simple an illustrates the point
+//  but it's simple and illustrates the point
 public class ShowMessageBoxFaultlesExecutionService : FaultlessExecution.FaultlessExecutionService
 {
     protected override void OnException(Exception ex)
@@ -79,8 +80,8 @@ With our new MessageBox error handler, we change our IOC Container to inject Sho
     .OnSuccess((result) => this.LoadPersonList(result.ReturnValue));
 ```
 
-### A more elegant solution for showing errors to the user
-In Wpf and Xamarin Forms I do show the error to the user, with an implementation like this
+### Sample Implementation for Wpf/Xamarin Forms
+In Wpf and Xamarin Forms I do show the error to the user, with an implementation like this because it allows me to completely separate any UI invocation, making it super testable (unlike the Messagebox implementation above)
 ```c#
 //This interface allows me to inject either the base level IFaultlessExecutionService into my class 
 //  or if it's a UI component this IViewModelFaultHandler which will show something to the user
