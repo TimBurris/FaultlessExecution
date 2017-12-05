@@ -80,7 +80,7 @@ With our new MessageBox error handler, we change our IOC Container to inject Sho
     .OnSuccess((result) => this.LoadPersonList(result.ReturnValue));
 ```
 
-### Sample Implementation for Wpf/Xamarin Forms
+### Sample Exception Handler Implementation for Wpf/Xamarin Forms
 In Wpf and Xamarin Forms I do show the error to the user, with an implementation like this because it allows me to completely separate any UI invocation, making it super testable (unlike the Messagebox implementation above)
 ```c#
 //This interface allows me to inject either the base level IFaultlessExecutionService into my class 
