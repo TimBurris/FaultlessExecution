@@ -8,7 +8,7 @@
 
     <PackageLicenseUrl>https://github.com/DumpsterNinja/FaultlessExecution/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/DumpsterNinja/FaultlessExecution</PackageProjectUrl>
-    <PackageTags>try;catch;trycatch;error;exception;exceptionhandler;errorhandler;handler;utility</PackageTags>
+    <PackageTags>try,;catch,;trycatch,;error,;exception,;exceptionhandler,;errorhandler,;handler</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
