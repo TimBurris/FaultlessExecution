@@ -110,14 +110,14 @@ just derive from FaultlessExecutionService and override OnException
 
         protected override void OnException(Exception ex)
         {
-            var connectionException = ex as Api.Contracts.NoConnectionException;
+            var connectionException = ex as NoConnectionException;
             if (connectionException != null)
             {
                 _navigator.PushModalAsync<ViewModels.NoConnectionViewModel>();
                 return;
             }
 
-            var httpException = ex as Api.Contracts.HttpResponseException;
+            var httpException = ex as HttpResponseException;
             if (httpException != null)
             {
                 _navigator.PushModalAsync<ViewModels.ErrorViewModel>(initAction: (vm) =>
@@ -130,7 +130,7 @@ just derive from FaultlessExecutionService and override OnException
 
             }
 
-            var timeoutException = ex as Api.Contracts.ServiceCallTimeoutException;
+            var timeoutException = ex as ServiceCallTimeoutException;
             if (timeoutException != null)
             {
 
