@@ -123,6 +123,20 @@ namespace FaultlessExecutionTests
             result.ExecutedCode.Should().Be(_failFunc);
         }
 
+
+        [TestMethod]
+        public void TryExecuteSyncAsAsync_invokes_code()
+        {
+            //*************  arrange  ******************
+            var service = new FaultlessExecutionService();
+            Action a = () => _numTimesCodeRan++;
+            //*************    act    ******************
+            var result = service.TryExecuteSyncAsAsync(a).Result;
+
+            //*************  assert   ******************
+            _numTimesCodeRan.Should().Be(1);
+
+        }
     }
 
     [TestClass]
@@ -250,5 +264,18 @@ namespace FaultlessExecutionTests
             result.ExecutedCode.Should().Be(_failFunc);
         }
 
+        [TestMethod]
+        public void TryExecuteSyncAsAsync_invokes_code()
+        {
+            //*************  arrange  ******************
+            var service = new FaultlessExecutionService();
+            Func<string> a = () => { _numTimesCodeRan++; return "i ran"; };
+            //*************    act    ******************
+            var result = service.TryExecuteSyncAsAsync(a).Result;
+
+            //*************  assert   ******************
+            _numTimesCodeRan.Should().Be(1);
+
+        }
     }
 }

@@ -48,9 +48,9 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncFuncExecutionResult<T>> TryExecuteAsAsync<T>(Func<T> code)
+        public async Task<AsyncFuncExecutionResult<T>> TryExecuteSyncAsAsync<T>(Func<T> code)
         {
-            Func<Task<T>> x = () => Task.Run<T>(() => code.Invoke());
+            Func<Task<T>> x = () => Task.Run<T>(code);
             return await this.TryExecuteAsync(x);
         }
         #endregion
@@ -95,9 +95,9 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncActionExecutionResult> TryExecuteAsAsync(Action code)
+        public async Task<AsyncActionExecutionResult> TryExecuteSyncAsAsync(Action code)
         {
-            Func<Task> x = () => Task.Run(() => code);
+            Func<Task> x = () => Task.Run(code);
 
             return await this.TryExecuteAsync(x);
         }

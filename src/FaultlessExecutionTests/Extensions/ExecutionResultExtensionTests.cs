@@ -87,5 +87,45 @@ namespace FaultlessExecutionTests.Extensions
             didRun.Should().BeFalse();
 
         }
+
+        [TestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void AsyncChainTest(bool actionIsSuccessful)
+        {
+            //*************  arrange  ******************
+            int numtimesActionRan = 0;
+            Action a = () =>
+            {
+                numtimesActionRan++;
+                if (!actionIsSuccessful)
+                    throw new ApplicationException();
+            };
+            bool exceptionRan = false;
+            bool successRan = false;
+
+            var service = new FaultlessExecutionService();
+
+            //*************    act    ******************
+            service.TryExecuteSyncAsAsync(a)
+                .OnException(() => exceptionRan = true)
+                .OnSuccess(() => successRan = true)
+                .Wait();
+
+            //*************  assert   ******************
+            numtimesActionRan.Should().Be(1);
+
+            if (actionIsSuccessful)
+            {
+                exceptionRan.Should().BeFalse();
+                successRan.Should().BeTrue();
+            }
+            else
+            {
+                exceptionRan.Should().BeTrue();
+                successRan.Should().BeFalse();
+            }
+
+        }
     }
 }

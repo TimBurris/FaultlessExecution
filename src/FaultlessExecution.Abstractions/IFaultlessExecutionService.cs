@@ -25,12 +25,12 @@ namespace FaultlessExecution.Abstractions
         Task<AsyncFuncExecutionResult<T>> TryExecuteAsync<T>(Func<Task<T>> code);
 
         /// <summary>
-        /// Peforms a <see cref="TryExecuteAsAsync{T}(Func{T})"/> on <paramref name="code"/> by wrapping it inside of a Task.Run
+        /// Peforms a <see cref="TryExecuteSyncAsAsync{T}(Func{T})"/> on <paramref name="code"/> by wrapping it inside of a Task.Run
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="code">The code to be executed</param>
         /// <returns>a <see cref="AsyncFuncExecutionResult"/> which indicates WasSuccessful, the exception that was raised(if one raised), as well as the return value T of your delegate code</returns>
-        Task<AsyncFuncExecutionResult<T>> TryExecuteAsAsync<T>(Func<T> code);
+        Task<AsyncFuncExecutionResult<T>> TryExecuteSyncAsAsync<T>(Func<T> code);
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace FaultlessExecution.Abstractions
         /// </summary>
         /// <param name="code">The code to be executed</param>
         /// <returns>a <see cref="AsyncActionExecutionResult"/> which indicates WasSuccessful and the exception that was raised(if one raised)</returns>
-        Task<AsyncActionExecutionResult> TryExecuteAsAsync(Action code);
+        Task<AsyncActionExecutionResult> TryExecuteSyncAsAsync(Action code);
 
         #endregion
 
