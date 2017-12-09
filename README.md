@@ -2,7 +2,12 @@
 Library providing short-hand and extensibility for trapping exceptions
 
 ## Purpose
-To provide a mechanism declutter code that might require lots of try..catch as well as provide a way to more easily process exceptions on a line by line basis rather than relying on global error handlers.
+To provide a mechanism declutter code that might require lots of try..catch as well as provide a way to more easily process exceptions on a line by line basis rather than relying on global error handlers. 
+
+Hopefully this library encourages you, as it has me, to solve less than desirable try/catch solutions that I generally find myself facing
+* Wrapping large chunks of code in a single try/catch, making it difficult to recover from an exception because too much code has been encompassed 
+* Skipping try/catches altogether because it just seems tedious and pasting the same exact code in every "catch" to handle the exception seems redundant and annoying
+* Rely on a single global error handler for your entire application, and just accept that if an error occurs, the app (or web request) is pretty much a lost cause until restarted
 
 
 ## Usage
@@ -27,6 +32,9 @@ Choose what to do if the code ran without error and what to do if the code did t
 ```
 ### Some Helpful Extensions
 While the first example helps a little, we can use extensions to simplify the code even more
+```c#
+using FaultlessExecution.Extensions;
+```
 ```c#
 _faultlessExecutionService
     .TryExecute(() => _database.GetAllThePeopleInTheWorld())
@@ -88,7 +96,10 @@ In Wpf and Xamarin Forms I do show the error to the user, with an implementation
 public interface IViewModelFaultHandler : IFaultlessExecutionService
 {
 }
+```
 
+just derive from FaultlessExecutionService and override OnException
+```c#
  public class ViewModelFaultHandler : FaultlessExecutionService, IViewModelFaultHandler
     {
         private Contracts.INavigator _navigator;
@@ -99,14 +110,14 @@ public interface IViewModelFaultHandler : IFaultlessExecutionService
 
         protected override void OnException(Exception ex)
         {
-            var connectionException = ex as Api.Contracts.NoConnectionException;
+            var connectionException = ex as NoConnectionException;
             if (connectionException != null)
             {
                 _navigator.PushModalAsync<ViewModels.NoConnectionViewModel>();
                 return;
             }
 
-            var httpException = ex as Api.Contracts.HttpResponseException;
+            var httpException = ex as HttpResponseException;
             if (httpException != null)
             {
                 _navigator.PushModalAsync<ViewModels.ErrorViewModel>(initAction: (vm) =>
@@ -119,7 +130,7 @@ public interface IViewModelFaultHandler : IFaultlessExecutionService
 
             }
 
-            var timeoutException = ex as Api.Contracts.ServiceCallTimeoutException;
+            var timeoutException = ex as ServiceCallTimeoutException;
             if (timeoutException != null)
             {
 
