@@ -108,10 +108,9 @@ namespace FaultlessExecutionTests.Extensions
 
             //*************    act    ******************
             service.TryExecuteSyncAsAsync(a)
-                .OnException(() => exceptionRan = true)
-                .OnSuccess(() => successRan = true)
-                .Wait();
-
+                 .OnExceptionAsync((e) => exceptionRan = true)
+                 .OnSuccessAsync(() => successRan = true)
+                 .Wait();
             //*************  assert   ******************
             numtimesActionRan.Should().Be(1);
 

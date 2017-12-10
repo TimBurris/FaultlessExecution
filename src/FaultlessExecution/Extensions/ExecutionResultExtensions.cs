@@ -7,7 +7,7 @@ namespace FaultlessExecution.Extensions
 {
     public static class ExecutionResultExtensions
     {
-        public async static Task<TExecutionResult> OnException<TExecutionResult>(this Task<TExecutionResult> task, Action errorHandler)
+        public async static Task<TExecutionResult> OnExceptionAsync<TExecutionResult>(this Task<TExecutionResult> task, Action errorHandler)
             where TExecutionResult : Abstractions.ExecutionResult
         {
             var result = await task;
@@ -25,7 +25,7 @@ namespace FaultlessExecution.Extensions
             return result;
         }
 
-        public async static Task<TExecutionResult> OnException<TExecutionResult>(this Task<TExecutionResult> task, Action<TExecutionResult> errorHandler)
+        public async static Task<TExecutionResult> OnExceptionAsync<TExecutionResult>(this Task<TExecutionResult> task, Action<TExecutionResult> errorHandler)
             where TExecutionResult : Abstractions.ExecutionResult
         {
             var result = await task;
@@ -44,7 +44,7 @@ namespace FaultlessExecution.Extensions
             return result;
         }
 
-        public async static Task<TExecutionResult> OnSuccess<TExecutionResult>(this Task<TExecutionResult> task, Action successHandler)
+        public async static Task<TExecutionResult> OnSuccessAsync<TExecutionResult>(this Task<TExecutionResult> task, Action successHandler)
            where TExecutionResult : Abstractions.ExecutionResult
         {
             var result = await task;
@@ -62,7 +62,7 @@ namespace FaultlessExecution.Extensions
             return result;
         }
 
-        public async static Task<TExecutionResult> OnSuccess<TExecutionResult>(this Task<TExecutionResult> task, Action<TExecutionResult> successHandler)
+        public async static Task<TExecutionResult> OnSuccessAsync<TExecutionResult>(this Task<TExecutionResult> task, Action<TExecutionResult> successHandler)
             where TExecutionResult : Abstractions.ExecutionResult
         {
             var result = await task;
