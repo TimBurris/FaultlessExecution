@@ -153,10 +153,13 @@ Fantastic! Your global error handler will catch all the errors, allow you to log
 
 When you make a call to get data from the database, or from a Rest Api, or anywhere that there might be connection issues or timeouts, are you comfortable with the global error handler?  Once you hit your global handler, your application is in a pretty unknown state because you bailed from all code without a chance to leave the user in a good place.
 
-A good use of this library is to handle all errors, and do a bit of cleanup before bailing. Maybe there are some pieces of data that your view can live without, while others warrent you telling the user what happened and closing out the window/page.
+A good use of this library is to handle all errors, and do a bit of cleanup before bailing. Maybe there are some pieces of data that your view can live without, while others warrant you telling the user what happened and closing out the window/page.
 
 ## Why not just use try/catch around every line that might error
 If you are disciplined enough to put try catch around every external resource call, and copy/paste the same "catch" block in every place, then you are far more disciplined than I.
 
 ## Installing
-TODO- provide nuget package info
+Nuget https://www.nuget.org/packages/FaultlessExecution/
+
+Package Manager Console
+`Install-Package FaultlessExecution`
