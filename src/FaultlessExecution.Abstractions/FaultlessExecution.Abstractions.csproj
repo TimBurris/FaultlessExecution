@@ -5,6 +5,7 @@
     <Authors>Tim Burris</Authors>
     <Description>Library providing short-hand and extensibility for trapping exceptions</Description>
     <Company>Tim Burris</Company>
+    <PackageProjectUrl>https://github.com/DumpsterNinja/FaultlessExecution</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>

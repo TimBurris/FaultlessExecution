@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Tim Burris</Authors>
     <Description>Library providing short-hand and extensibility for trapping exceptions, and returning appropriate Mvc Actions</Description>
+    <PackageTags>try,;catch,;trycatch,;error,;exception,;exceptionhandler,;errorhandler,;handler;mvc;aspnet;aspnetcore;core</PackageTags>
+    <PackageProjectUrl>https://github.com/DumpsterNinja/FaultlessExecution</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
