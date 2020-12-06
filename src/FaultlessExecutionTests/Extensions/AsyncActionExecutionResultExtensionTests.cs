@@ -24,7 +24,7 @@ namespace FaultlessExecutionTests.Extensions
         [TestInitialize]
         public void Init()
         {
-            _service = new FaultlessExecutionService();
+            _service = new FaultlessExecutionService(logger: null);
             _successfulActionCode = () => { _numberOfTimesActionCodeRan++; return Task.Delay(1); };
             _failActionCode = () => { _numberOfTimesActionCodeRan++; throw new ApplicationException(); };
 

@@ -14,6 +14,7 @@ namespace FaultlessExecution.AspNetCore.Mvc
             Microsoft.Extensions.Logging.ILogger<ActionResultFaultlessExecutionService> logger)
         {
             _faultlessExecutionService = faultlessExecutionService;
+            _faultlessExecutionService.LogErrors = false;//bypass the built in error log, we'll log the errors ourself
             _logger = logger;
         }
 

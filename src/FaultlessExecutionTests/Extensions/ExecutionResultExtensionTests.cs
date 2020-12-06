@@ -104,7 +104,7 @@ namespace FaultlessExecutionTests.Extensions
             bool exceptionRan = false;
             bool successRan = false;
 
-            var service = new FaultlessExecutionService();
+            var service = new FaultlessExecutionService(logger: null);
 
             //*************    act    ******************
             service.TryExecuteSyncAsAsync(a)

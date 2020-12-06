@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using FaultlessExecution.Abstractions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace FaultlessExecution
 {
     public class FaultlessExecutionService : IFaultlessExecutionService
     {
+        private readonly ILogger<FaultlessExecutionService> _logger;
+
+        public FaultlessExecutionService(ILogger<FaultlessExecutionService> logger)
+        {
+            _logger = logger;
+        }
         #region Func<T> implementation
         public FuncExecutionResult<T> TryExecute<T>(Func<T> code)
         {
@@ -20,7 +27,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.OnException(ex);
+                this.HandleException(ex);
                 result = FuncExecutionResult<T>.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -40,7 +47,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.OnException(ex);
+                this.HandleException(ex);
                 result = AsyncFuncExecutionResult<T>.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -68,7 +75,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.OnException(ex);
+                this.HandleException(ex);
                 result = ActionExecutionResult.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -87,7 +94,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.OnException(ex);
+                this.HandleException(ex);
                 result = AsyncActionExecutionResult.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -102,6 +109,21 @@ namespace FaultlessExecution
             return await this.TryExecuteAsync(x);
         }
         #endregion
+
+
+        private void HandleException(Exception ex)
+        {
+            if (this.LogErrors && _logger != null)
+            {
+                _logger.LogError(ex, "Error caught by Faultless");
+            }
+            this.OnException(ex);
+        }
+
+        /// <summary>
+        /// specifieds whether or not all errors should be logged
+        /// </summary>
+        public bool LogErrors { get; set; } = true;//default is true
 
         /// <summary>
         /// an overridable method that consumers can use to handle all errors

@@ -59,5 +59,11 @@ namespace FaultlessExecution.Abstractions
         #endregion
 
 
+        /// <summary>
+        /// specifieds whether or not all errors should be logged
+        /// </summary>
+        /// <remarks>Defaut: true</remarks>
+        bool LogErrors { get; set; }
+
     }
 }

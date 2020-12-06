@@ -13,6 +13,8 @@ namespace FaultlessExecutionTests
         private Action _successfulAction;
         private Action _failAction;
 
+        private FaultlessExecutionService _service;
+
         [TestInitialize]
         public void Init()
         {
@@ -22,6 +24,8 @@ namespace FaultlessExecutionTests
                 _numTimesCodeRan++;
                 throw new ApplicationException("i failed");
             };
+
+            _service = new FaultlessExecutionService(logger: null);
         }
 
         [TestMethod]
@@ -29,15 +33,15 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecute(_successfulAction);
+            var result = _service.TryExecute(_successfulAction);
 
             //*************  assert   ******************
             result.WasSuccessful.Should().BeTrue();
             _numTimesCodeRan.Should().Be(1);
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_successfulAction);
         }
 
@@ -46,17 +50,17 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecute(_failAction);
+            var result = _service.TryExecute(_failAction);
 
             //*************  assert   ******************
             _numTimesCodeRan.Should().Be(1);
             result.WasSuccessful.Should().BeFalse();
             result.Exception.Should().NotBeNull();
             result.Exception.Message.Should().Be("i failed");
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_failAction);
 
         }
@@ -69,11 +73,15 @@ namespace FaultlessExecutionTests
         private Func<Task> _successfulFunc;
         private Func<Task> _failFunc;
 
+        private FaultlessExecutionService _service;
+
         [TestInitialize]
         public void Init()
         {
             _successfulFunc = () => this.RunSuccessfullyAsync();
             _failFunc = () => this.RunFailAsync();
+
+            _service = new FaultlessExecutionService(logger: null);
         }
 
         private async Task RunSuccessfullyAsync()
@@ -93,15 +101,15 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecuteAsync(_successfulFunc).Result;
+            var result = _service.TryExecuteAsync(_successfulFunc).Result;
 
             //*************  assert   ******************
             result.WasSuccessful.Should().BeTrue();
             _numTimesCodeRan.Should().Be(1);
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_successfulFunc);
         }
 
@@ -109,17 +117,17 @@ namespace FaultlessExecutionTests
         public void TryExecute_when_error_returns_fail()
         {
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecuteAsync(_failFunc).Result;
+            var result = _service.TryExecuteAsync(_failFunc).Result;
 
             //*************  assert   ******************
             _numTimesCodeRan.Should().Be(1);
             result.WasSuccessful.Should().BeFalse();
             result.Exception.Should().NotBeNull();
             result.Exception.Message.Should().Be("i failed");
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_failFunc);
         }
 
@@ -128,10 +136,10 @@ namespace FaultlessExecutionTests
         public void TryExecuteSyncAsAsync_invokes_code()
         {
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
             Action a = () => _numTimesCodeRan++;
             //*************    act    ******************
-            var result = service.TryExecuteSyncAsAsync(a).Result;
+            var result = _service.TryExecuteSyncAsAsync(a).Result;
 
             //*************  assert   ******************
             _numTimesCodeRan.Should().Be(1);
@@ -146,6 +154,8 @@ namespace FaultlessExecutionTests
         private Func<string> _successfulFunc;
         private Func<string> _failFunc;
 
+        private FaultlessExecutionService _service;
+
         [TestInitialize]
         public void Init()
         {
@@ -159,6 +169,8 @@ namespace FaultlessExecutionTests
                 _numTimesCodeRan++;
                 throw new ApplicationException("i failed");
             };
+
+            _service = new FaultlessExecutionService(logger: null);
         }
 
         [TestMethod]
@@ -166,16 +178,16 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecute(_successfulFunc);
+            var result = _service.TryExecute(_successfulFunc);
 
             //*************  assert   ******************
             result.WasSuccessful.Should().BeTrue();
             result.ReturnValue.Should().Be("i ran successfully");
             _numTimesCodeRan.Should().Be(1);
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_successfulFunc);
         }
 
@@ -184,17 +196,17 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecute(_failFunc);
+            var result = _service.TryExecute(_failFunc);
 
             //*************  assert   ******************
             _numTimesCodeRan.Should().Be(1);
             result.WasSuccessful.Should().BeFalse();
             result.Exception.Should().NotBeNull();
             result.Exception.Message.Should().Be("i failed");
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_failFunc);
         }
 
@@ -206,12 +218,14 @@ namespace FaultlessExecutionTests
         private int _numTimesCodeRan = 0;
         private Func<Task<string>> _successfulFunc;
         private Func<Task<string>> _failFunc;
-
+        private FaultlessExecutionService _service;
         [TestInitialize]
         public void Init()
         {
             _successfulFunc = () => this.RunSuccessfullyAsync();
             _failFunc = () => this.RunFailAsync();
+
+            _service = new FaultlessExecutionService(logger: null);
         }
 
         private async Task<string> RunSuccessfullyAsync()
@@ -232,16 +246,16 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecuteAsync(_successfulFunc).Result;
+            var result = _service.TryExecuteAsync(_successfulFunc).Result;
 
             //*************  assert   ******************
             result.WasSuccessful.Should().BeTrue();
             result.ReturnValue.Should().Be("i ran successfully");
             _numTimesCodeRan.Should().Be(1);
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_successfulFunc);
         }
 
@@ -250,17 +264,17 @@ namespace FaultlessExecutionTests
         {
 
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
 
             //*************    act    ******************
-            var result = service.TryExecuteAsync(_failFunc).Result;
+            var result = _service.TryExecuteAsync(_failFunc).Result;
 
             //*************  assert   ******************
             _numTimesCodeRan.Should().Be(1);
             result.WasSuccessful.Should().BeFalse();
             result.Exception.Should().NotBeNull();
             result.Exception.Message.Should().Be("i failed");
-            result.ExecutedBy.Should().Be(service);
+            result.ExecutedBy.Should().Be(_service);
             result.ExecutedCode.Should().Be(_failFunc);
         }
 
@@ -268,10 +282,10 @@ namespace FaultlessExecutionTests
         public void TryExecuteSyncAsAsync_invokes_code()
         {
             //*************  arrange  ******************
-            var service = new FaultlessExecutionService();
+
             Func<string> a = () => { _numTimesCodeRan++; return "i ran"; };
             //*************    act    ******************
-            var result = service.TryExecuteSyncAsAsync(a).Result;
+            var result = _service.TryExecuteSyncAsAsync(a).Result;
 
             //*************  assert   ******************
             _numTimesCodeRan.Should().Be(1);
