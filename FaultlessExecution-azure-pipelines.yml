@@ -6,6 +6,8 @@ parameters:
     
 trigger: none
 
+name:  ${{ parameters.VersionNumber }}$(rev:.r)
+
 pool:
   vmImage: 'ubuntu-latest'
 
