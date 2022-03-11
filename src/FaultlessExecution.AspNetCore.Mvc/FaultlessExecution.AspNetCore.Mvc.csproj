@@ -5,7 +5,8 @@
     <Authors>Tim Burris</Authors>
     <Description>Library providing short-hand and extensibility for trapping exceptions, and returning appropriate Mvc Actions</Description>
     <PackageTags>try,;catch,;trycatch,;error,;exception,;exceptionhandler,;errorhandler,;handler;mvc;aspnet;aspnetcore;core</PackageTags>
-    <PackageProjectUrl>https://github.com/DumpsterNinja/FaultlessExecution</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/TimBurris/FaultlessExecution</PackageProjectUrl>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

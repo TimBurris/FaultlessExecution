@@ -6,8 +6,8 @@
     <Description>Library providing short-hand and extensibility for trapping exceptions</Description>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2PAssets</TargetsForTfmSpecificBuildOutput>
 
-    <PackageLicenseUrl>https://github.com/DumpsterNinja/FaultlessExecution/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/DumpsterNinja/FaultlessExecution</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/TimBurris/FaultlessExecution/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/TimBurris/FaultlessExecution</PackageProjectUrl>
     <PackageTags>try,;catch,;trycatch,;error,;exception,;exceptionhandler,;errorhandler,;handler</PackageTags>
   </PropertyGroup>
 
