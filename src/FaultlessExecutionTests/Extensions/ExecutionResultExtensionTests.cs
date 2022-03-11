@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FaultlessExecution;
 using FaultlessExecution.Abstractions;
-using FaultlessExecution.Extensions;
 using FluentAssertions;
 using Moq;
 using System.Threading.Tasks;
