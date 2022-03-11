@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FaultlessExecution.Extensions;//gives you access to OnSuccess, OnException, Retry, RetryIf, etc
+using FaultlessExecution;//gives you access to OnSuccess, OnException, Retry, RetryIf, etc
 using System.Collections.ObjectModel;
 
 namespace FaultlessExecutionSample
@@ -27,7 +27,7 @@ namespace FaultlessExecutionSample
             if (UseGenericExceptionHandler)
                 _faultlessExecutionService = new ShowMessageBoxFaultlesExecutionService(); //this demonstrates how you might write a generic handler so that you don't need to worry about writing .onexeption handlers for all your calls
             else
-                _faultlessExecutionService = new FaultlessExecution.FaultlessExecutionService();
+                _faultlessExecutionService = new FaultlessExecution.FaultlessExecutionService(logger: null);
 
             //simple example of testing that something did not error
             var peopleResult = _faultlessExecutionService.TryExecute(() => _database.GetAllThePeopleInTheWorld());

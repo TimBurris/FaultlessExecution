@@ -8,6 +8,11 @@ namespace FaultlessExecutionSample
 {
     public class ShowMessageBoxFaultlesExecutionService : FaultlessExecution.FaultlessExecutionService
     {
+        public ShowMessageBoxFaultlesExecutionService()
+            : base(logger: null)
+        {
+
+        }
         protected override void OnException(Exception ex)
         {
             base.OnException(ex);
