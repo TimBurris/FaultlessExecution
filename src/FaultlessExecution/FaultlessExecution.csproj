@@ -9,6 +9,7 @@
     <PackageLicenseUrl>https://github.com/TimBurris/FaultlessExecution/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/TimBurris/FaultlessExecution</PackageProjectUrl>
     <PackageTags>try,;catch,;trycatch,;error,;exception,;exceptionhandler,;errorhandler,;handler</PackageTags>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
