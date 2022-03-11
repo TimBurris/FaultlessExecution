@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace FaultlessExecution.Extensions
+namespace FaultlessExecution
 {
     public static class AsyncFuncExecutionResultExtensions
     {

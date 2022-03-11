@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FaultlessExecution.Extensions
+namespace FaultlessExecution
 {
     public static class ExecutionResultExtensions
     {

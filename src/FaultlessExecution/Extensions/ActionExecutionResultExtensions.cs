@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FaultlessExecution.Extensions
+namespace FaultlessExecution
 {
     public static class ActionExecutionResultExtensions
     {
