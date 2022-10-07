@@ -18,46 +18,46 @@ namespace FaultlessExecution.AspNetCore.Mvc
             _logger = logger;
         }
 
-        public async Task<IActionResult> TryExecuteAsync<T>(Func<Task<T>> code)
+        public async Task<IActionResult> TryExecuteAsync<T>(Func<Task<T>> code, string message = "Error caught by Faultless", params object[] args)
         {
-            var result = await _faultlessExecutionService.TryExecuteAsync(code);
+            var result = await _faultlessExecutionService.TryExecuteAsync(code, message, args);
             if (result.WasSuccessful)
             {
                 return new OkObjectResult(result.ReturnValue);
             }
             else
             {
-                _logger.LogError(result.Exception, "Exception caught; BadRequest with FailModel will be sent to client");
+                _logger.LogInformation("Exception caught; BadRequest with FailModel will be sent to client");
                 return new BadRequestObjectResult(this.BuildBadRequestObject(result));
             }
         }
 
-        public async Task<IActionResult> TryExecuteSyncAsAsync<T>(Func<T> code)
+        public async Task<IActionResult> TryExecuteSyncAsAsync<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args)
         {
             Func<Task<T>> x = () => Task.Run<T>(code);
-            return await this.TryExecuteAsync(x);
+            return await this.TryExecuteAsync(x, message, args, message, args);
         }
 
 
-        public async Task<IActionResult> TryExecuteAsync(Func<Task> code)
+        public async Task<IActionResult> TryExecuteAsync(Func<Task> code, string message = "Error caught by Faultless", params object[] args)
         {
-            var result = await _faultlessExecutionService.TryExecuteAsync(code);
+            var result = await _faultlessExecutionService.TryExecuteAsync(code, message, args);
             if (result.WasSuccessful)
             {
                 return new NoContentResult();
             }
             else
             {
-                _logger.LogError(result.Exception, "Exception caught; BadRequest with FailModel will be sent to client");
+                _logger.LogInformation("Exception caught; BadRequest with FailModel will be sent to client");
                 return new BadRequestObjectResult(this.BuildBadRequestObject(result));
             }
         }
 
 
-        public async Task<IActionResult> TryExecuteSyncAsAsync(Action code)
+        public async Task<IActionResult> TryExecuteSyncAsAsync(Action code, string message = "Error caught by Faultless", params object[] args)
         {
             Func<Task> x = () => Task.Run(code);
-            return await this.TryExecuteAsync(x);
+            return await this.TryExecuteAsync(x, message, args);
         }
 
         public ActionResultFaultlessExecutionServiceConfiguration Configuration { get; set; }
