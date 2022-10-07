@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using FaultlessExecution.Abstractions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -16,7 +14,7 @@ namespace FaultlessExecution
             _logger = logger;
         }
         #region Func<T> implementation
-        public FuncExecutionResult<T> TryExecute<T>(Func<T> code)
+        public FuncExecutionResult<T> TryExecute<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args)
         {
             FuncExecutionResult<T> result;
             try
@@ -27,7 +25,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.HandleException(ex);
+                this.HandleException(ex, message, args);
                 result = FuncExecutionResult<T>.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -35,7 +33,7 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncFuncExecutionResult<T>> TryExecuteAsync<T>(Func<Task<T>> code)
+        public async Task<AsyncFuncExecutionResult<T>> TryExecuteAsync<T>(Func<Task<T>> code, string message = "Error caught by Faultless", params object[] args)
         {
             AsyncFuncExecutionResult<T> result;
 
@@ -47,7 +45,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.HandleException(ex);
+                this.HandleException(ex, message, args);
                 result = AsyncFuncExecutionResult<T>.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -55,16 +53,16 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncFuncExecutionResult<T>> TryExecuteSyncAsAsync<T>(Func<T> code)
+        public async Task<AsyncFuncExecutionResult<T>> TryExecuteSyncAsAsync<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args)
         {
             Func<Task<T>> x = () => Task.Run<T>(code);
-            return await this.TryExecuteAsync(x);
+            return await this.TryExecuteAsync(x, message, args);
         }
         #endregion
 
         #region Action Implementation
 
-        public ActionExecutionResult TryExecute(Action code)
+        public ActionExecutionResult TryExecute(Action code, string message = "Error caught by Faultless", params object[] args)
         {
             ActionExecutionResult result;
             try
@@ -75,7 +73,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.HandleException(ex);
+                this.HandleException(ex, message, args);
                 result = ActionExecutionResult.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -83,7 +81,7 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncActionExecutionResult> TryExecuteAsync(Func<Task> code)
+        public async Task<AsyncActionExecutionResult> TryExecuteAsync(Func<Task> code, string message = "Error caught by Faultless", params object[] args)
         {
             AsyncActionExecutionResult result;
             try
@@ -94,7 +92,7 @@ namespace FaultlessExecution
             }
             catch (Exception ex)
             {
-                this.HandleException(ex);
+                this.HandleException(ex, message, args);
                 result = AsyncActionExecutionResult.FailedResult(executedBy: this, executedCode: code, exception: ex);
             }
 
@@ -102,20 +100,20 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncActionExecutionResult> TryExecuteSyncAsAsync(Action code)
+        public async Task<AsyncActionExecutionResult> TryExecuteSyncAsAsync(Action code, string message = "Error caught by Faultless", params object[] args)
         {
             Func<Task> x = () => Task.Run(code);
 
-            return await this.TryExecuteAsync(x);
+            return await this.TryExecuteAsync(x, message, args);
         }
         #endregion
 
 
-        private void HandleException(Exception ex)
+        private void HandleException(Exception ex, string message, params object[] args)
         {
             if (this.LogErrors && _logger != null)
             {
-                _logger.LogError(ex, "Error caught by Faultless");
+                _logger.LogError(ex, message, args);
             }
             this.OnException(ex);
         }
