@@ -17,7 +17,7 @@ namespace FaultlessExecution.AspNetCore.Mvc.Abstractions
         /// <returns>If successful, an <see cref="OkObjectResult"/> with the <typeparamref name="T"/> value as the content
         /// if unsuccessful, a <see cref="BadRequestObjectResult"/> with content provided by <see cref="ActionResultFaultlessExecutionServiceConfiguration.BadRequestObjectBuilder"/>
         /// </returns>
-        Task<IActionResult> TryExecuteAsync<T>(Func<Task<T>> code, string message = "Error caught by Faultless", params object[] args);
+        Task<IActionResult> TryExecuteAsync<T>(Func<Task<T>> code, string message = null, params object[] args);
 
         /// <summary>
         /// Invokes <paramref name="code"/> handling errors and returning an <see cref="IActionResult"/>
@@ -28,7 +28,7 @@ namespace FaultlessExecution.AspNetCore.Mvc.Abstractions
         /// <returns>If successful, a <see cref="NoContentResult"/> 
         /// if unsuccessful, a <see cref="BadRequestObjectResult"/> with content provided by <see cref="ActionResultFaultlessExecutionServiceConfiguration.BadRequestObjectBuilder"/>
         /// </returns>
-        Task<IActionResult> TryExecuteAsync(Func<Task> code, string message = "Error caught by Faultless", params object[] args);
+        Task<IActionResult> TryExecuteAsync(Func<Task> code, string message = null, params object[] args);
 
         /// <summary>
         /// Peforms a <see cref="TryExecuteAsync{T}(Func{T})"/> on <paramref name="code"/> by wrapping it inside of a Task.Run
@@ -40,7 +40,7 @@ namespace FaultlessExecution.AspNetCore.Mvc.Abstractions
         /// <returns>If successful, an <see cref="OkObjectResult"/> with the <typeparamref name="T"/> value as the content
         /// if unsuccessful, a <see cref="BadRequestObjectResult"/> with content provided by <see cref="ActionResultFaultlessExecutionServiceConfiguration.BadRequestObjectBuilder"/>
         /// </returns>
-        Task<IActionResult> TryExecuteSyncAsAsync<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args);
+        Task<IActionResult> TryExecuteSyncAsAsync<T>(Func<T> code, string message = null, params object[] args);
 
         /// <summary>
         /// Peforms a <see cref="TryExecuteAsync(Func{Task})"/> on <paramref name="code"/> by wrapping it inside of a Task.Run
@@ -51,7 +51,7 @@ namespace FaultlessExecution.AspNetCore.Mvc.Abstractions
         /// <returns>If successful, a <see cref="NoContentResult"/> 
         /// if unsuccessful, a <see cref="BadRequestObjectResult"/> with content provided by <see cref="ActionResultFaultlessExecutionServiceConfiguration.BadRequestObjectBuilder"/>
         /// </returns>
-        Task<IActionResult> TryExecuteSyncAsAsync(Action code, string message = "Error caught by Faultless", params object[] args);
+        Task<IActionResult> TryExecuteSyncAsAsync(Action code, string message = null, params object[] args);
 
         /// <summary>
         /// Optional Configuration Options for this instance.  If not specified a <see cref="ActionResultFaultlessExecutionServiceConfiguration.DefaultConfiguration"/> will be used

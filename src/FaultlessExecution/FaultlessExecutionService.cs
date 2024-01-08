@@ -13,8 +13,9 @@ namespace FaultlessExecution
         {
             _logger = logger;
         }
+
         #region Func<T> implementation
-        public FuncExecutionResult<T> TryExecute<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args)
+        public FuncExecutionResult<T> TryExecute<T>(Func<T> code, string message = null, params object[] args)
         {
             FuncExecutionResult<T> result;
             try
@@ -33,7 +34,7 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncFuncExecutionResult<T>> TryExecuteAsync<T>(Func<Task<T>> code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<AsyncFuncExecutionResult<T>> TryExecuteAsync<T>(Func<Task<T>> code, string message = null, params object[] args)
         {
             AsyncFuncExecutionResult<T> result;
 
@@ -53,7 +54,7 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncFuncExecutionResult<T>> TryExecuteSyncAsAsync<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<AsyncFuncExecutionResult<T>> TryExecuteSyncAsAsync<T>(Func<T> code, string message = null, params object[] args)
         {
             Func<Task<T>> x = () => Task.Run<T>(code);
             return await this.TryExecuteAsync(x, message, args);
@@ -62,7 +63,7 @@ namespace FaultlessExecution
 
         #region Action Implementation
 
-        public ActionExecutionResult TryExecute(Action code, string message = "Error caught by Faultless", params object[] args)
+        public ActionExecutionResult TryExecute(Action code, string message = null, params object[] args)
         {
             ActionExecutionResult result;
             try
@@ -81,7 +82,7 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncActionExecutionResult> TryExecuteAsync(Func<Task> code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<AsyncActionExecutionResult> TryExecuteAsync(Func<Task> code, string message = null, params object[] args)
         {
             AsyncActionExecutionResult result;
             try
@@ -100,7 +101,7 @@ namespace FaultlessExecution
             return result;
         }
 
-        public async Task<AsyncActionExecutionResult> TryExecuteSyncAsAsync(Action code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<AsyncActionExecutionResult> TryExecuteSyncAsAsync(Action code, string message = null, params object[] args)
         {
             Func<Task> x = () => Task.Run(code);
 
@@ -113,6 +114,11 @@ namespace FaultlessExecution
         {
             if (this.LogErrors && _logger != null)
             {
+                if (string.IsNullOrEmpty(message))
+                {
+                    message = "Error caught by Faultless: " + ex?.Message;
+                }
+
                 _logger.LogError(ex, message, args);
             }
             this.OnException(ex);

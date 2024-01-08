@@ -18,7 +18,7 @@ namespace FaultlessExecution.AspNetCore.Mvc
             _logger = logger;
         }
 
-        public async Task<IActionResult> TryExecuteAsync<T>(Func<Task<T>> code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<IActionResult> TryExecuteAsync<T>(Func<Task<T>> code, string message = null, params object[] args)
         {
             var result = await _faultlessExecutionService.TryExecuteAsync(code, message, args);
             if (result.WasSuccessful)
@@ -32,14 +32,14 @@ namespace FaultlessExecution.AspNetCore.Mvc
             }
         }
 
-        public async Task<IActionResult> TryExecuteSyncAsAsync<T>(Func<T> code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<IActionResult> TryExecuteSyncAsAsync<T>(Func<T> code, string message = null, params object[] args)
         {
             Func<Task<T>> x = () => Task.Run<T>(code);
             return await this.TryExecuteAsync(x, message, args, message, args);
         }
 
 
-        public async Task<IActionResult> TryExecuteAsync(Func<Task> code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<IActionResult> TryExecuteAsync(Func<Task> code, string message = null, params object[] args)
         {
             var result = await _faultlessExecutionService.TryExecuteAsync(code, message, args);
             if (result.WasSuccessful)
@@ -54,7 +54,7 @@ namespace FaultlessExecution.AspNetCore.Mvc
         }
 
 
-        public async Task<IActionResult> TryExecuteSyncAsAsync(Action code, string message = "Error caught by Faultless", params object[] args)
+        public async Task<IActionResult> TryExecuteSyncAsAsync(Action code, string message = null, params object[] args)
         {
             Func<Task> x = () => Task.Run(code);
             return await this.TryExecuteAsync(x, message, args);
