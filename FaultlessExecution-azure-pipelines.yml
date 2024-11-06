@@ -31,6 +31,14 @@ steps:
     versionEnvVar: packageVersion
     outputDir: '$(Build.ArtifactStagingDirectory)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    packagesToPack: '**/FaultlessExecution.AspNetCore.Mvc.csproj'
+    versioningScheme: byEnvVar
+    versionEnvVar: packageVersion
+    outputDir: '$(Build.ArtifactStagingDirectory)'
+    
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
