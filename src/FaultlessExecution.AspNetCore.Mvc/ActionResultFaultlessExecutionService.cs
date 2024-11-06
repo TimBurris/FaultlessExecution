@@ -27,7 +27,8 @@ namespace FaultlessExecution.AspNetCore.Mvc
             }
             else
             {
-                _logger.LogInformation("Exception caught; BadRequest with FailModel will be sent to client");
+                message = message ?? "Exception caught; BadRequest with FailModel will be sent to client";
+                _logger.LogError(message, result.Exception);
                 return new BadRequestObjectResult(this.BuildBadRequestObject(result));
             }
         }
@@ -48,7 +49,8 @@ namespace FaultlessExecution.AspNetCore.Mvc
             }
             else
             {
-                _logger.LogInformation("Exception caught; BadRequest with FailModel will be sent to client");
+                message = message ?? "Exception caught; BadRequest with FailModel will be sent to client";
+                _logger.LogError(message, result.Exception);
                 return new BadRequestObjectResult(this.BuildBadRequestObject(result));
             }
         }
